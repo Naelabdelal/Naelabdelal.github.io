@@ -74,8 +74,8 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .lb-top, .lb-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; }
 .lb-top { padding-top: calc(env(safe-area-inset-top, 0px) + 10px) }
 .lb-bottom { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) }
-.lb-stage { overflow: auto; display: grid; place-items: center; min-height: 0; box-sizing: border-box; padding: clamp(24px, 7vh, 72px) clamp(28px, 10vw, 140px); background: radial-gradient(ellipse at 50% 42%, #2c2d32 0%, #1a1b1e 70%) }
-.lb-stage img { max-width: 100%; max-height: calc(100vh - 250px); max-height: calc(100dvh - 250px); width: auto; height: auto; object-fit: contain; cursor: zoom-in; box-shadow: 0 2px 4px rgb(0 0 0 / .35), 0 18px 40px rgb(0 0 0 / .55) }
+.lb-stage { overflow: auto; display: grid; place-items: center; min-height: 0; box-sizing: border-box; padding: clamp(24px, 7vh, 72px) clamp(28px, 10vw, 140px); background: radial-gradient(ellipse 75% 65% at 50% 40%, #8e8a84 0%, #6f6b66 45%, #4a4744 100%) }
+.lb-stage img { max-width: 100%; max-height: calc(100vh - 250px); max-height: calc(100dvh - 250px); width: auto; height: auto; object-fit: contain; cursor: zoom-in; box-shadow: 1px 1px 0 #3a3836, 2px 2px 0 #2f2d2b, 3px 3px 0 #2a2826, 4px 4px 0 #252321, 5px 5px 0 #201e1c, 8px 12px 14px rgba(0,0,0,.45), 18px 30px 44px rgba(0,0,0,.4), 30px 50px 90px rgba(0,0,0,.3) }
 .lb.zoom .lb-stage { padding: 0 }
 .lb.zoom .lb-stage { place-items: start }
 .lb.zoom .lb-stage img { max-width: none; max-height: none; width: 240%; cursor: zoom-out }
