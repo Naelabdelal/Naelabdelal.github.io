@@ -129,7 +129,17 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .mark { display: inline-flex; align-items: center; gap: 10px }
 .sig { width: 30px; height: auto; color: var(--ember); flex: none; overflow: visible }
 footer .sig-foot { display: block; width: 64px; height: auto; color: var(--muted); margin: 0 0 14px; overflow: visible }
+
+/* Wide screens: the PDF portfolio's thorned tentacles creep in from the screen edges, outside the content column */
+.sides { display: none }
+@media (min-width: 1260px) {
+  .sides { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 4 }
+  .sides i { position: absolute; top: 0; bottom: 0; width: calc((100vw - 1120px) / 2 + 24px); background-repeat: repeat-y; background-size: 300px auto; opacity: .75; mix-blend-mode: multiply }
+  .sides .l { left: 0; background-image: url(img/bg/side-l.png); background-position: left top; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent) }
+  .sides .r { right: 0; background-image: url(img/bg/side-r.png); background-position: right 0 top 420px; -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent); mask-image: linear-gradient(270deg, #000 55%, transparent) }
+}
 </style>
+<div class="sides" aria-hidden="true"><i class="l"></i><i class="r"></i></div>
 <header class="site"><div class="wrap"><a class="mark" href="index.html"><svg class="sig" viewBox="-1.5 -1.5 42 23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M0 20L9 0L18 20L27 0M27 0H39M22.5 10H34M18 20H31M3.2 13H14.9"/></svg><span>Nael Abdelal<b>.</b></span></a><nav aria-label="Site"><ul class="links"><li><a href="works.html" aria-current="page">Works</a></li><li><a href="series.html">Series</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
 <section class="wrap works-head"><p class="eyebrow">289 paintings · 2023–2026</p><h1>Works<b>.</b></h1><p class="lead">Pick a size below. Open any painting to see it large, buy it or send an enquiry.</p></section>
 <div id="bar-top"></div><nav class="bar" aria-label="Sizes"><div class="wrap chips"><a class="chip" href="#highlights"><i style="background:#aa8545"></i>Highlights<small>73</small></a><a class="chip" href="#entropic"><i style="background:#4560aa"></i>A5 &amp; 25 × 25<small>108</small></a><a class="chip" href="#s30x40"><i style="background:#71aa45"></i>30 × 40<small>44</small></a><a class="chip" href="#s40x50"><i style="background:#7745aa"></i>40 × 50<small>34</small></a><a class="chip" href="#s50x60"><i style="background:#aa4582"></i>50 × 60<small>41</small></a><a class="chip" href="#s50x70"><i style="background:#aa4545"></i>50 × 70<small>30</small></a><a class="chip" href="#s60x70"><i style="background:#45aa6d"></i>60 × 70<small>23</small></a><a class="chip" href="#s60x80"><i style="background:#aa9f45"></i>60 × 80<small>6</small></a><a class="chip" href="#s80x100"><i style="background:#aa6745"></i>80 × 100<small>3</small></a></div></nav>
