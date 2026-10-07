@@ -114,6 +114,23 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .chip[aria-current="true"] small { color: #55565c }
 .js .part:not(.on) { display: none }
 .part { padding-top: 36px }
+/* Wide screens: each size group brings its own title-page element (from the PDFs) and tentacles into the side space, repeating as you scroll */
+@media (min-width: 1260px) {
+  .part { position: relative }
+  .part > * { position: relative; z-index: 1 }
+  .part::before, .part::after { content: ""; position: absolute; top: 0; bottom: 0; width: calc((100vw - 1120px) / 2 + 24px); pointer-events: none; z-index: 0; background-repeat: repeat-y; background-size: 440px auto }
+  .part::before { left: 0; background-position: left top; -webkit-mask-image: linear-gradient(90deg, #000 60%, transparent); mask-image: linear-gradient(90deg, #000 60%, transparent) }
+  .part::after { right: 0; background-position: right top 380px; -webkit-mask-image: linear-gradient(270deg, #000 60%, transparent); mask-image: linear-gradient(270deg, #000 60%, transparent) }
+  #highlights::before { background-image: url(img/side/highlights-l.webp) } #highlights::after { background-image: url(img/side/highlights-r.webp) }
+  #entropic::before { background-image: url(img/side/entropic-l.webp) } #entropic::after { background-image: url(img/side/entropic-r.webp) }
+  #s30x40::before { background-image: url(img/side/s30x40-l.webp) } #s30x40::after { background-image: url(img/side/s30x40-r.webp) }
+  #s40x50::before { background-image: url(img/side/s40x50-l.webp) } #s40x50::after { background-image: url(img/side/s40x50-r.webp) }
+  #s50x60::before { background-image: url(img/side/s50x60-l.webp) } #s50x60::after { background-image: url(img/side/s50x60-r.webp) }
+  #s50x70::before { background-image: url(img/side/s50x70-l.webp) } #s50x70::after { background-image: url(img/side/s50x70-r.webp) }
+  #s60x70::before { background-image: url(img/side/s60x70-l.webp) } #s60x70::after { background-image: url(img/side/s60x70-r.webp) }
+  #s60x80::before { background-image: url(img/side/s60x80-l.webp) } #s60x80::after { background-image: url(img/side/s60x80-r.webp) }
+  #s80x100::before { background-image: url(img/side/s80x100-l.webp) } #s80x100::after { background-image: url(img/side/s80x100-r.webp) }
+}
 .next-part { padding-block: 8px 40px; text-align: right }
 .next-part a { display: inline-block; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; font-size: .9rem }
 .next-part a:hover, .next-part a:focus-visible { border-color: var(--muted); outline: none }
@@ -139,7 +156,6 @@ footer .sig-foot { display: block; width: 64px; height: auto; color: var(--muted
   .sides .r { right: 0; background-image: url(img/bg/side-r.png); background-position: right 0 top 420px; -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent); mask-image: linear-gradient(270deg, #000 55%, transparent) }
 }
 </style>
-<div class="sides" aria-hidden="true"><i class="l"></i><i class="r"></i></div>
 <header class="site"><div class="wrap"><a class="mark" href="index.html"><svg class="sig" viewBox="-1.5 -1.5 42 23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M0 20L9 0L18 20L27 0M27 0H39M22.5 10H34M18 20H31M3.2 13H14.9"/></svg><span>Nael Abdelal<b>.</b></span></a><nav aria-label="Site"><ul class="links"><li><a href="works.html" aria-current="page">Works</a></li><li><a href="series.html">Series</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
 <section class="wrap works-head"><p class="eyebrow">289 paintings · 2023–2026</p><h1>Works<b>.</b></h1><p class="lead">Pick a size below. Open any painting to see it large, buy it or send an enquiry.</p></section>
 <div id="bar-top"></div><nav class="bar" aria-label="Sizes"><div class="wrap chips"><a class="chip" href="#highlights"><i style="background:#aa8545"></i>Highlights<small>73</small></a><a class="chip" href="#entropic"><i style="background:#4560aa"></i>A5 &amp; 25 × 25<small>108</small></a><a class="chip" href="#s30x40"><i style="background:#71aa45"></i>30 × 40<small>44</small></a><a class="chip" href="#s40x50"><i style="background:#7745aa"></i>40 × 50<small>34</small></a><a class="chip" href="#s50x60"><i style="background:#aa4582"></i>50 × 60<small>41</small></a><a class="chip" href="#s50x70"><i style="background:#aa4545"></i>50 × 70<small>30</small></a><a class="chip" href="#s60x70"><i style="background:#45aa6d"></i>60 × 70<small>23</small></a><a class="chip" href="#s60x80"><i style="background:#aa9f45"></i>60 × 80<small>6</small></a><a class="chip" href="#s80x100"><i style="background:#aa6745"></i>80 × 100<small>3</small></a></div></nav>
