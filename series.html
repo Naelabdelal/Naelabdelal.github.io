@@ -220,8 +220,18 @@ const SHOP = {"196": ["ae-187-thorn", 420], "191": ["ae-188-he-drains-me", 420],
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const el = e.target; el.style.backgroundImage = 'url(' + el.dataset.bg + ')'; io.unobserve(el); } }), { rootMargin: '600px 0px' });
     document.querySelectorAll('.th').forEach(el => io.observe(el));
     const lb = document.getElementById('lb'), img = document.getElementById('lb-img'), cap = document.getElementById('cap'), count = document.getElementById('count'), stage = document.getElementById('stage');
-    let L = [];
-    let cur = 0, opener = null;
+// in-page jumps (series cards, chapter buttons): keep the target pinned while images above it load
+function jumpTo(id) {
+  const el = document.getElementById(id); if (!el) return;
+  const put = () => window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 8, behavior: 'instant' });
+  put(); let n = 0; const t = setInterval(() => { put(); if (++n > 12) clearInterval(t); }, 120);
+  document.querySelectorAll('img').forEach(i => { if (!i.complete) i.addEventListener('load', () => { if (n <= 12) put(); }, { once: true }); });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1); history.pushState(null, '', '#' + id); jumpTo(id); }));
+if (location.hash.length > 1) jumpTo(location.hash.slice(1));
+window.addEventListener('popstate', () => { if (location.hash.length > 1) jumpTo(location.hash.slice(1)); });
+let L = [];
+let cur = 0, opener = null;
     function show(i) {
       cur = (i + L.length) % L.length; const n = L[cur], [, med, dim, yr] = WA[n];
       lb.classList.remove('zoom'); img.src = 'img/p/' + String(n).padStart(3, '0') + '.webp';
