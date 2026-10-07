@@ -52,8 +52,8 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .foot-links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px }
 .foot-links a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .foot-links a:hover { color: var(--ink) }
-.btn.buy { background: var(--ember); border-color: var(--ember); color: #1b1b1e }
-.btn.buy:hover { filter: brightness(1.08) }
+.btn.buy { background: transparent; border-color: rgb(240 100 63 / .55); color: #f3a58f }
+.btn.buy:hover { border-color: var(--ember); color: var(--ink) }
 [hidden] { display: none !important }
 /* Series: page title, then each series as a run of chapters; every chapter sits on a blurred ground taken from its own painting, so the wall changes colour with the story. */
 .series-head { padding-block: clamp(36px, 8vw, 72px) 8px }
@@ -91,7 +91,7 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .s-close { padding-block: 48px 24px }
 .s-close p { margin: 0; max-width: 40ch; font-family: var(--display); font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.2 }
 .s-close p b { color: var(--ember); font-weight: 400 }
-.btn.buy { background: var(--ember); border-color: var(--ember); color: #1b1b1e }
+.btn.buy { background: transparent; border-color: rgb(240 100 63 / .55); color: #f3a58f }
 .th { display: block; width: 100%; background-color: var(--wall-2); background-size: 100% auto; background-repeat: no-repeat }
 .work { all: unset; display: block; width: 100%; cursor: zoom-in; line-height: 0 }
 .work:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px }
