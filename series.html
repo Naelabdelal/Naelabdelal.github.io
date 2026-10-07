@@ -135,8 +135,11 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 /* Fukface: a salon hang of faces on an oxblood wall */
 .fukface { background: radial-gradient(ellipse 90% 60% at 50% 30%, #3a1d22 0%, #26181b 55%, var(--wall) 100%) }
 .fukface .s-title b { color: #e0485a }
-.ff-wall { columns: 4 220px; column-gap: 18px; padding-block: 24px 8px }
-.ff { margin: 0 0 22px; break-inside: avoid }
+.ff-wall { padding-block: 8px }
+.ff-size { font-family: var(--display); font-weight: 400; font-size: 1.5rem; margin: 34px 0 14px; padding-top: 12px; border-top: 1px solid rgb(255 255 255 / .08) }
+.ff-size span { font-family: var(--body); font-size: .75rem; color: var(--muted); margin-left: 6px }
+.ff-row { display: grid; gap: 22px 18px; grid-template-columns: repeat(auto-fill, minmax(min(46%, 220px), 1fr)); align-items: end }
+.ff { margin: 0; min-width: 0 }
 .ff img { display: block; width: 100%; height: auto; box-shadow: 0 0 0 1px rgb(0 0 0 / .4), 0 14px 34px rgb(0 0 0 / .6); transition: transform .3s ease }
 .ff .work:hover img { transform: scale(1.02) }
 .ff figcaption { margin-top: 8px; color: var(--muted); font-size: .8rem }
