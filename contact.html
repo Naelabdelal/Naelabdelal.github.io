@@ -72,15 +72,17 @@ textarea { min-height: 120px; resize: vertical }
 .sig { width: 30px; height: auto; color: var(--ember); flex: none; overflow: visible }
 footer .sig-foot { display: block; width: 64px; height: auto; color: var(--muted); margin: 0 0 14px; overflow: visible }
 
-/* Wide screens: the PDF portfolio's thorned tentacles creep in from the screen edges, outside the content column */
-.sides { display: none }
-@media (min-width: 1260px) {
-  .sides { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 4 }
-  .sides i { position: absolute; top: 0; bottom: 0; width: calc((100vw - 1120px) / 2 + 24px); background-repeat: repeat-y; background-size: 440px auto; opacity: 1 }
-  .sides .l { left: 0; background-image: url(img/bg/side-l.png); background-position: left top; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent) }
-  .sides .r { right: 0; background-image: url(img/bg/side-r.png); background-position: right 0 top 420px; -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent); mask-image: linear-gradient(270deg, #000 55%, transparent) }
-}
-</style><div class="sides" aria-hidden="true"><i class="l"></i><i class="r"></i></div>
+
+/* Home: two layers of the PDF tentacles behind the whole page; they drift at different speeds when scrolling, which gives depth */
+.depth { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden }
+.depth i { position: absolute; left: 0; right: 0; top: 0; height: 400%; background-repeat: repeat-y; will-change: transform;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.45) 30%, rgba(0,0,0,.45) 70%, #000 100%); mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.45) 30%, rgba(0,0,0,.45) 70%, #000 100%) }
+.depth .far { background-image: url(img/bg/depth-far.webp); background-size: max(100%, 800px) auto; background-position: center top; opacity: .9 }
+.depth .near { background-image: url(img/bg/depth-near.webp); background-size: max(100%, 1000px) auto; background-position: center 300px; opacity: .75 }
+header.site, main, footer { position: relative; z-index: 1 }
+header.site { background: rgb(34 35 39 / .92) }
+@media (prefers-reduced-motion: reduce) { .depth i { will-change: auto } }
+</style><div class="depth" aria-hidden="true"><i class="far"></i><i class="near"></i></div>
 <header class="site"><div class="wrap"><a class="mark" href="index.html"><svg class="sig" viewBox="-1.5 -1.5 42 23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M0 20L9 0L18 20L27 0M27 0H39M22.5 10H34M18 20H31M3.2 13H14.9"/></svg><span>Nael Abdelal<b>.</b></span></a><nav aria-label="Site"><ul class="links"><li><a href="works.html">Works</a></li><li><a href="series.html">Series</a></li><li><a href="about.html">About</a></li><li><a href="contact.html" aria-current="page">Contact</a></li></ul></nav></div></header>
 <main>
 <section class="wrap intro">
@@ -155,5 +157,10 @@ $('ig').addEventListener('click', async () => {
 });
 const ca = $('copy-addr'); if (ca) ca.addEventListener('click', () => copyText(EMAIL, 'Email address copied.'));
 refresh();
+</script>
+<script>
+(() => { const f = document.querySelector('.depth .far'), n = document.querySelector('.depth .near'); if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let t = false; const go = () => { const y = window.scrollY; f.style.transform = 'translate3d(0,' + (-y * .12) + 'px,0)'; n.style.transform = 'translate3d(0,' + (-y * .38) + 'px,0)'; t = false; };
+  addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(go); } }, { passive: true }); go(); })();
 </script>
 </body></html>

@@ -134,15 +134,6 @@ a.work { cursor: pointer }
 .sig { width: 30px; height: auto; color: var(--ember); flex: none; overflow: visible }
 footer .sig-foot { display: block; width: 64px; height: auto; color: var(--muted); margin: 0 0 14px; overflow: visible }
 
-/* Wide screens: the PDF portfolio's thorned tentacles creep in from the screen edges, outside the content column */
-.sides { display: none }
-@media (min-width: 1260px) {
-  .sides { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 4 }
-  .sides i { position: absolute; top: 0; bottom: 0; width: calc((100vw - 1120px) / 2 + 24px); background-repeat: repeat-y; background-size: 440px auto; opacity: 1 }
-  .sides .l { left: 0; background-image: url(img/bg/side-l.png); background-position: left top; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent) }
-  .sides .r { right: 0; background-image: url(img/bg/side-r.png); background-position: right 0 top 420px; -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent); mask-image: linear-gradient(270deg, #000 55%, transparent) }
-}
-
 /* Home: two layers of the PDF tentacles behind the whole page; they drift at different speeds when scrolling, which gives depth */
 .depth { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden }
 .depth i { position: absolute; left: 0; right: 0; top: 0; height: 400%; background-repeat: repeat-y; will-change: transform;

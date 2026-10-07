@@ -107,7 +107,7 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .ix p:last-child { margin: 8px 0 0; color: var(--muted); font-size: .9rem }
 .sr { border-top: 1px solid var(--line); margin-top: 48px }
 /* DanBana: a triptych, hung side by side and aligned on its band */
-.trip { background: linear-gradient(180deg, var(--wall) 0, #2a2526 30%, var(--wall) 100%) }
+.trip { background: linear-gradient(180deg, transparent 0, rgb(42 37 38 / .7) 30%, transparent 100%) }
 .tp-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 32px); padding-block: 32px 64px; align-items: start }
 @media (max-width: 760px) { .tp-row { grid-template-columns: 1fr; gap: 48px } }
 .tp { margin: 0; min-width: 0 }
@@ -119,7 +119,7 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .tp .meta b { color: var(--ink); font-weight: 500 }
 .tp .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px }
 /* Entropic: cobalt into teal; the grid starts in order and loses its hold work by work */
-.en { overflow-x: clip; background: linear-gradient(180deg, var(--wall) 0, color-mix(in srgb, #4560aa 14%, var(--wall)) 12%, color-mix(in srgb, #45a3aa 12%, var(--wall)) 70%, var(--wall) 100%) }
+.en { overflow-x: clip; background: linear-gradient(180deg, transparent 0, color-mix(in srgb, #4560aa 16%, transparent) 12%, color-mix(in srgb, #45a3aa 14%, transparent) 70%, transparent 100%) }
 .en .s-title b { color: #7d95d6 }
 .en-part { padding-block: 40px 24px }
 .en-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: start; margin-bottom: 28px }
@@ -135,7 +135,7 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .en-grid span { color: var(--muted); font-size: .7rem; font-variant-numeric: tabular-nums }
 @media (prefers-reduced-motion: reduce) { .en-grid li { transition: none } }
 /* Fukface: a salon hang of faces on an oxblood wall */
-.fukface { background: radial-gradient(ellipse 90% 60% at 50% 30%, #3a1d22 0%, #26181b 55%, var(--wall) 100%) }
+.fukface { background: radial-gradient(ellipse 90% 60% at 50% 30%, rgb(58 29 34 / .85) 0%, rgb(38 24 27 / .7) 55%, transparent 100%) }
 .fukface .s-title b { color: #e0485a }
 .ff-wall { padding-block: 8px }
 .ff-size { font-family: var(--display); font-weight: 400; font-size: 1.5rem; margin: 34px 0 14px; padding-top: 12px; border-top: 1px solid rgb(255 255 255 / .08) }
@@ -152,16 +152,17 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .sig { width: 30px; height: auto; color: var(--ember); flex: none; overflow: visible }
 footer .sig-foot { display: block; width: 64px; height: auto; color: var(--muted); margin: 0 0 14px; overflow: visible }
 
-/* Wide screens: the PDF portfolio's thorned tentacles creep in from the screen edges, outside the content column */
-.sides { display: none }
-@media (min-width: 1260px) {
-  .sides { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 4 }
-  .sides i { position: absolute; top: 0; bottom: 0; width: calc((100vw - 1120px) / 2 + 24px); background-repeat: repeat-y; background-size: 440px auto; opacity: 1 }
-  .sides .l { left: 0; background-image: url(img/bg/side-l.png); background-position: left top; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent) }
-  .sides .r { right: 0; background-image: url(img/bg/side-r.png); background-position: right 0 top 420px; -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent); mask-image: linear-gradient(270deg, #000 55%, transparent) }
-}
+/* Home: two layers of the PDF tentacles behind the whole page; they drift at different speeds when scrolling, which gives depth */
+.depth { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden }
+.depth i { position: absolute; left: 0; right: 0; top: 0; height: 400%; background-repeat: repeat-y; will-change: transform;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.45) 30%, rgba(0,0,0,.45) 70%, #000 100%); mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.45) 30%, rgba(0,0,0,.45) 70%, #000 100%) }
+.depth .far { background-image: url(img/bg/depth-far.webp); background-size: max(100%, 800px) auto; background-position: center top; opacity: .9 }
+.depth .near { background-image: url(img/bg/depth-near.webp); background-size: max(100%, 1000px) auto; background-position: center 300px; opacity: .75 }
+header.site, main, footer { position: relative; z-index: 1 }
+header.site { background: rgb(34 35 39 / .92) }
+@media (prefers-reduced-motion: reduce) { .depth i { will-change: auto } }
 </style>
-<div class="sides" aria-hidden="true"><i class="l"></i><i class="r"></i></div>
+<div class="depth" aria-hidden="true"><i class="far"></i><i class="near"></i></div>
 <header class="site"><div class="wrap"><a class="mark" href="index.html"><svg class="sig" viewBox="-1.5 -1.5 42 23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M0 20L9 0L18 20L27 0M27 0H39M22.5 10H34M18 20H31M3.2 13H14.9"/></svg><span>Nael Abdelal<b>.</b></span></a><nav aria-label="Site"><ul class="links"><li><a href="works.html">Works</a></li><li><a href="series.html" aria-current="page">Series</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
 <main>
 <section class="wrap series-head"><p class="eyebrow">Series</p><h1>Series<b>.</b></h1><p class="lead">Some paintings belong together. A series is one story or one idea carried across several works, meant to be seen together.</p></section>
@@ -272,4 +273,9 @@ frm.addEventListener('click', () => { const n = L[cur], on = frm.getAttribute('a
     stage.addEventListener('touchstart', e => { if (!lb.classList.contains('zoom') && e.touches.length === 1) sx = e.touches[0].clientX; }, { passive: true });
     stage.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); });
     </script>
+<script>
+(() => { const f = document.querySelector('.depth .far'), n = document.querySelector('.depth .near'); if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let t = false; const go = () => { const y = window.scrollY; f.style.transform = 'translate3d(0,' + (-y * .12) + 'px,0)'; n.style.transform = 'translate3d(0,' + (-y * .38) + 'px,0)'; t = false; };
+  addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(go); } }, { passive: true }); go(); })();
+</script>
 </body></html>
