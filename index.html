@@ -204,7 +204,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, no, ti, med, dim, yr, sp] = L[cur];
   lb.classList.remove('zoom', 'fr'); frm.setAttribute('aria-pressed', 'false'); frm.textContent = 'Framed';
   img.src = 'img/p/' + pad(n) + '.webp'; img.alt = 'Painting No. ' + no + (ti ? ', ' + ti : '');
-  cap.innerHTML = '<b>No. ' + no + '</b>' + (ti ? ' · <i>' + esc(ti) + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr;
+  cap.innerHTML = '<b>No. ' + no + '</b>' + (ti ? ' · <i>' + esc(ti) + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + (sp ? ' · <b class="price">€' + sp[1] + '</b>' : '');
   document.getElementById('ask').href = 'contact.html#no' + no;
   buy.hidden = !sp; if (sp) { buy.href = 'https://naelabdelal.myshopify.com/products/' + sp[0]; buy.textContent = 'Buy · €' + sp[1]; }
   count.textContent = (cur + 1) + ' / ' + L.length;

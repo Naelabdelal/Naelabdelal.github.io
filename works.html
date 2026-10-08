@@ -289,7 +289,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, med, dim, yr] = W[idx.get(L[cur])];
   lb.classList.remove('zoom'); img.src = 'img/p/' + String(n).padStart(3, '0') + '.webp';
   img.alt = 'Painting No. ' + NO[n] + (TI[n] ? ', ' + TI[n] : '') + ', ' + med.toLowerCase() + ', ' + dim;
-  cap.innerHTML = '<b>No. ' + NO[n] + '</b>' + (TI[n] ? ' · <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr;
+  cap.innerHTML = '<b>No. ' + NO[n] + '</b>' + (TI[n] ? ' · <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + (SHOP[n] ? ' · <b class="price">€' + SHOP[n][1] + '</b>' : '');
   document.getElementById('ask').href = 'contact.html#no' + NO[n];
   const de = document.getElementById('desc'), sr = SER[n]; de.hidden = !(DE[n] || sr);
   de.innerHTML = (DE[n] ? '<i>' + DE[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + (sr ? (DE[n] ? ' · ' : '') + '<a href="series.html#' + sr[2] + '">' + sr[0] + ', ' + sr[1] + ' →</a>' : '');

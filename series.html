@@ -250,7 +250,7 @@ let cur = 0, opener = null;
       cur = (i + L.length) % L.length; const n = L[cur], [, med, dim, yr] = WA[n];
       lb.classList.remove('zoom'); img.src = 'img/p/' + String(n).padStart(3, '0') + '.webp';
       img.alt = CH[n] + ', painting No. ' + NO[n];
-      cap.innerHTML = '<b>' + CH[n] + '</b> · No. ' + NO[n] + (TI[n] && TI[n] !== CH[n] ? ' · <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr;
+      cap.innerHTML = '<b>' + CH[n] + '</b> · No. ' + NO[n] + (TI[n] && TI[n] !== CH[n] ? ' · <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + (SHOP[n] ? ' · <b class="price">€' + SHOP[n][1] + '</b>' : '');
       document.getElementById('ask').href = 'contact.html#no' + NO[n];
   frm.setAttribute('aria-pressed', 'false'); frm.textContent = 'Framed'; lb.classList.remove('fr');
       const sp = SHOP[n], buy = document.getElementById('buy');
