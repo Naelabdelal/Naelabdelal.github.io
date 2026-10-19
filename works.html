@@ -32,7 +32,7 @@
 @keyframes eggbg{0%,78%{opacity:1}100%{opacity:0;visibility:hidden}}
 @keyframes eggspark{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--x),var(--y))}}
 @media (prefers-reduced-motion:reduce){#egg,#egg *{animation-duration:.01s!important;animation-delay:0s!important}}
-</style><style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}</style></head><body>
+</style><style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{font-family:var(--body,Karla,sans-serif);font-size:.62em;font-weight:500;color:var(--ink);letter-spacing:.04em;margin-right:.5em;vertical-align:.12em}.cap .det{display:block;font-size:.84rem;color:var(--muted)}</style></head><body>
 
 
 
@@ -315,7 +315,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, med, dim, yr] = W[idx.get(L[cur])];
   lb.classList.remove('zoom'); img.src = 'img/p/' + String(n).padStart(3, '0') + '.webp';
   img.alt = 'Painting No. ' + NO[n] + (TI[n] ? ', ' + TI[n] : '') + ', ' + med.toLowerCase() + ', ' + dim;
-  cap.innerHTML = '<b>No. ' + NO[n] + '</b>' + (TI[n] ? ' · <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + ([157].includes(n) ? ' · <b class="sold">Sold</b>' : SHOP[n] ? ' · <b class="price">€' + SHOP[n][1] + '</b>' : '');
+  cap.innerHTML = '<span class="ttl">' + (TI[n] ? '<span class="no">No. ' + NO[n] + '</span><i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : 'No. ' + NO[n]) + '</span><span class="det">' + med + ', ' + dim + ' · ' + yr + ([157].includes(n) ? ' · <b class="sold">Sold</b>' : SHOP[n] ? ' · <b class="price">€' + SHOP[n][1] + '</b>' : '') + '</span>';
   document.getElementById('ask').href = 'contact.html#no' + NO[n];
   const de = document.getElementById('desc'), sr = SER[n]; de.hidden = !(DE[n] || sr);
   de.innerHTML = (DE[n] ? '<i>' + DE[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + (sr ? (DE[n] ? ' · ' : '') + '<a href="series.html#' + sr[2] + '">' + sr[0] + ', ' + sr[1] + ' →</a>' : '');
