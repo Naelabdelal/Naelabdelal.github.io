@@ -17,7 +17,7 @@
 .legal-line a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .legal-line a:hover { color: var(--ink) }
 </style>
-</head><body>
+<style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}</style></head><body>
 
 
 
@@ -211,7 +211,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, no, ti, med, dim, yr, sp] = L[cur];
   lb.classList.remove('zoom', 'fr'); frm.setAttribute('aria-pressed', 'false'); frm.textContent = 'Framed';
   img.src = 'img/p/' + pad(n) + '.webp'; img.alt = 'Painting No. ' + no + (ti ? ', ' + ti : '');
-  cap.innerHTML = '<b>No. ' + no + '</b>' + (ti ? ' · <i>' + esc(ti) + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + (sp ? ' · <b class="price">€' + sp[1] + '</b>' : '');
+  cap.innerHTML = '<b>No. ' + no + '</b>' + (ti ? ' · <i>' + esc(ti) + '</i>' : '') + ' · ' + med + ', ' + dim + ' · ' + yr + ([157].includes(n) ? ' · <b class="sold">Sold</b>' : sp ? ' · <b class="price">€' + sp[1] + '</b>' : '');
   document.getElementById('ask').href = 'contact.html#no' + no;
   buy.hidden = !sp; if (sp) { buy.href = 'https://naelabdelal.myshopify.com/products/' + sp[0]; buy.textContent = 'Buy · €' + sp[1]; }
   count.textContent = (cur + 1) + ' / ' + L.length;
