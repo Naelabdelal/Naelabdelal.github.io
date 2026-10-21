@@ -36,7 +36,7 @@
 .catch span{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);white-space:nowrap;font:11px/1 Karla,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ember,#f0643f);background:rgba(16,14,14,.8);padding:5px 8px;border-radius:999px}
 .catch.got{transition:transform .5s cubic-bezier(.5,0,.2,1),opacity .5s;opacity:0}
 @media (prefers-reduced-motion:reduce){#egg,#egg *{animation-duration:.01s!important;animation-delay:0s!important}}
-</style><style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{font-family:var(--body,Karla,sans-serif);font-size:.62em;font-weight:500;color:var(--ink);letter-spacing:.04em;margin-right:.5em;vertical-align:.12em}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
+</style><style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{color:var(--muted)}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
 
 
 
@@ -230,7 +230,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, no, ti, med, dim, yr, sp] = L[cur];
   lb.classList.remove('zoom', 'fr'); frm.setAttribute('aria-pressed', 'false'); frm.textContent = 'Framed';
   img.src = 'img/p/' + pad(n) + '.webp'; img.alt = 'Painting No. ' + no + (ti ? ', ' + ti : '');
-  cap.innerHTML = '<span class="ttl">' + 'No. ' + no + (ti ? ', <i>' + esc(ti) + '</i>' : '') + '</span><span class="det">' + med + ', ' + dim + ' · ' + yr + '</span><span class="det pr">' + ([157].includes(n) ? '<b class="sold">Sold</b>' : [148].includes(n) ? '<b class="nfs">Not for sale</b>' : sp ? '<b class="price">€' + sp[1] + '</b>' : '') + '</span>';
+  cap.innerHTML = '<span class="ttl"><span class="no">No. ' + no + (ti ? ',</span> <i>' + esc(ti) + '</i>' : '</span>') + '</span><span class="det">' + med + ', ' + dim + ' · ' + yr + '</span><span class="det pr">' + ([157].includes(n) ? '<b class="sold">Sold</b>' : [148].includes(n) ? '<b class="nfs">Not for sale</b>' : sp ? '<b class="price">€' + sp[1] + '</b>' : '') + '</span>';
   document.getElementById('ask').href = 'contact.html#no' + no;
   buy.hidden = !sp; if (sp) { buy.href = 'https://naelabdelal.myshopify.com/products/' + sp[0]; buy.textContent = 'Buy · €' + sp[1]; }
   count.textContent = (cur + 1) + ' / ' + L.length;

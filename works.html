@@ -17,7 +17,7 @@
 .legal-line a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .legal-line a:hover { color: var(--ink) }
 </style>
-<style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{font-family:var(--body,Karla,sans-serif);font-size:.62em;font-weight:500;color:var(--ink);letter-spacing:.04em;margin-right:.5em;vertical-align:.12em}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
+<style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{color:var(--muted)}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
 
 
 
@@ -300,7 +300,7 @@ function show(i) {
   cur = (i + L.length) % L.length; const [n, med, dim, yr] = W[idx.get(L[cur])];
   lb.classList.remove('zoom'); img.src = 'img/p/' + String(n).padStart(3, '0') + '.webp';
   img.alt = 'Painting No. ' + NO[n] + (TI[n] ? ', ' + TI[n] : '') + ', ' + med.toLowerCase() + ', ' + dim;
-  cap.innerHTML = '<span class="ttl">' + 'No. ' + NO[n] + (TI[n] ? ', <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + '</span><span class="det">' + med + ', ' + dim + ' · ' + yr + '</span><span class="det pr">' + ([157].includes(n) ? '<b class="sold">Sold</b>' : [148].includes(n) ? '<b class="nfs">Not for sale</b>' : SHOP[n] ? '<b class="price">€' + SHOP[n][1] + '</b>' : '') + '</span>';
+  cap.innerHTML = '<span class="ttl"><span class="no">No. ' + NO[n] + (TI[n] ? ',</span> <i>' + TI[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '</span>') + '</span><span class="det">' + med + ', ' + dim + ' · ' + yr + '</span><span class="det pr">' + ([157].includes(n) ? '<b class="sold">Sold</b>' : [148].includes(n) ? '<b class="nfs">Not for sale</b>' : SHOP[n] ? '<b class="price">€' + SHOP[n][1] + '</b>' : '') + '</span>';
   document.getElementById('ask').href = 'contact.html#no' + NO[n];
   const de = document.getElementById('desc'), sr = SER[n]; de.hidden = !(DE[n] || sr);
   de.innerHTML = (DE[n] ? '<i>' + DE[n].replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;') + '</i>' : '') + (sr ? (DE[n] ? ' · ' : '') + '<a href="series.html#' + sr[2] + '">' + sr[0] + ', ' + sr[1] + ' →</a>' : '');
