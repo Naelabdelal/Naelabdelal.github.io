@@ -21,6 +21,12 @@
 .lb.fz .lb-stage { overflow: hidden }
 .lb.fz .lb-stage img { cursor: grab }
 .lb.fz .lb-stage img:active { cursor: grabbing }
+
+nav.bar.bar { position: static !important; background: none; backdrop-filter: none; -webkit-backdrop-filter: none }
+.chips, .chips.chips { flex-direction: column; align-items: flex-start; flex-wrap: nowrap; overflow: visible; gap: 8px; padding-block: 6px 26px }
+.chip { min-width: 9.5rem; justify-content: flex-start }
+.chip:not([aria-current="true"]) { background: rgb(43 44 49 / .92) }
+.chip small { margin-left: auto }
 </style>
 <style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{color:var(--muted)}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
 
@@ -160,7 +166,7 @@ header.site { background: rgb(34 35 39 / .92) }
 <div class="depth" aria-hidden="true"><i class="far"></i><i class="near"></i></div>
 <header class="site"><div class="wrap"><a class="mark" href="index.html"><svg class="sig" viewBox="-2 -2 71 37" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M0.5 32L19 2L29.5 31.5M11.5 17.3L22.9 17.7M29.5 31.5L48 3.5L65 4M39.5 18L56.5 18.5M29.5 32L50.5 33"/></svg><span>Nael Abdelal<b>.</b></span></a><nav aria-label="Site"><ul class="links"><li><a href="works.html" aria-current="page">Works</a></li><li><a href="series.html">Series</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
 <section class="wrap works-head"><p class="eyebrow">295 paintings · 2023–2026</p><h1>Works<b>.</b></h1><p class="lead">Pick a size below. Open any painting to see it large, buy it or send an enquiry.</p></section>
-<div id="bar-top"></div><nav class="bar" aria-label="Sizes"><div class="wrap chips"><a class="chip" href="#highlights"><i style="background:#aa8545"></i>Most recent<small>74</small></a><a class="chip" href="#entropic"><i style="background:#4560aa"></i>A5 &amp; 25 × 25<small>113</small></a><a class="chip" href="#s30x40"><i style="background:#71aa45"></i>30 × 40<small>44</small></a><a class="chip" href="#s40x50"><i style="background:#7745aa"></i>40 × 50<small>34</small></a><a class="chip" href="#s50x60"><i style="background:#aa4582"></i>50 × 60<small>41</small></a><a class="chip" href="#s50x70"><i style="background:#aa4545"></i>50 × 70<small>30</small></a><a class="chip" href="#s60x70"><i style="background:#45aa6d"></i>60 × 70<small>23</small></a><a class="chip" href="#s60x80"><i style="background:#aa9f45"></i>60 × 80<small>6</small></a><a class="chip" href="#s50x100"><i style="background:#c0503a"></i>50 × 100<small>1</small></a><a class="chip" href="#s80x100"><i style="background:#aa6745"></i>80 × 100<small>3</small></a></div></nav>
+<div id="bar-top"></div><nav class="bar" aria-label="Sizes"><div class="wrap chips"><a class="chip" href="#highlights"><i style="background:#aa8545"></i>Most recent<small>74</small></a><a class="chip" href="#s80x100"><i style="background:#aa6745"></i>80 × 100<small>3</small></a><a class="chip" href="#s50x100"><i style="background:#c0503a"></i>50 × 100<small>1</small></a><a class="chip" href="#s60x80"><i style="background:#aa9f45"></i>60 × 80<small>6</small></a><a class="chip" href="#s60x70"><i style="background:#45aa6d"></i>60 × 70<small>23</small></a><a class="chip" href="#s50x70"><i style="background:#aa4545"></i>50 × 70<small>30</small></a><a class="chip" href="#s50x60"><i style="background:#aa4582"></i>50 × 60<small>41</small></a><a class="chip" href="#s40x50"><i style="background:#7745aa"></i>40 × 50<small>34</small></a><a class="chip" href="#s30x40"><i style="background:#71aa45"></i>30 × 40<small>44</small></a><a class="chip" href="#entropic"><i style="background:#4560aa"></i>A5 &amp; 25 × 25<small>113</small></a></div></nav>
 <section class="part" id="highlights" style="--tint:#aa8545">
   <div class="series"><div class="part-head">
   <div class="part-text"><p class="num">10</p><h2>Most recent</h2><p class="meta">The story of my style, told backwards in four chapters. · 74 works, 2023-2026</p>
@@ -346,8 +352,8 @@ function pick(fromNav) {
   const [h, no] = decodeURIComponent(location.hash.slice(1)).split('/');
   const id = ORDER.includes(h) ? h : 'highlights';
   document.querySelectorAll('.part').forEach(p => p.classList.toggle('on', p.id === id));
-  document.querySelectorAll('.chip').forEach(c => { const on = c.getAttribute('href') === '#' + id; c.setAttribute('aria-current', on ? 'true' : 'false'); if (on) c.scrollIntoView({ block: 'nearest', inline: 'center' }); });
-  if (fromNav && window.scrollY > barTop.offsetTop) window.scrollTo(0, barTop.offsetTop);
+  document.querySelectorAll('.chip').forEach(c => { const on = c.getAttribute('href') === '#' + id; c.setAttribute('aria-current', on ? 'true' : 'false'); });
+  if (fromNav) { const pt = document.getElementById(id); if (pt) window.scrollTo({ top: pt.getBoundingClientRect().top + window.scrollY - 8, behavior: 'smooth' }); }
   if (no && CAT2PUB[no]) { const b = document.getElementById(id).querySelector('.work[data-n="' + CAT2PUB[no] + '"]'); if (b) { if (!fromNav) { try { cameFrom = Date.now() - +(sessionStorage.getItem('fromHome') || 0) < 15000; sessionStorage.removeItem('fromHome'); } catch (e) {} } openAt(CAT2PUB[no], b); } }
   else if (!lb.hidden) close();
 }
