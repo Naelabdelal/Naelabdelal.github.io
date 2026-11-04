@@ -16,6 +16,11 @@
 .legal-line { margin-top: 18px; font-size: .78rem; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline }
 .legal-line a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .legal-line a:hover { color: var(--ink) }
+
+.lb-stage img { touch-action: none; transform-origin: 50% 50%; will-change: transform }
+.lb.fz .lb-stage { overflow: hidden }
+.lb.fz .lb-stage img { cursor: grab }
+.lb.fz .lb-stage img:active { cursor: grabbing }
 </style>
 <style>.work.sold{position:relative}.work.sold::after{content:"Sold";position:absolute;top:8px;left:8px;font:600 11px/1 Karla,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1b1b1e;background:var(--ember,#f0643f);padding:5px 8px;border-radius:999px}#cap b.sold,b.sold{color:var(--ember,#f0643f)!important}#cap b.nfs,b.nfs{color:var(--ember,#f0643f)!important}</style><style>.cap .ttl{display:block;font:400 clamp(1.5rem,6vw,2.1rem)/1.1 var(--display,"Cormorant Garamond",Georgia,serif);color:var(--ember,#f0643f);margin:0 0 6px;letter-spacing:.01em}.cap .ttl i{font-style:italic}.cap .ttl .no{color:var(--muted)}.cap .det{display:block;font-size:.84rem;color:var(--muted)}.cap .det.pr{margin-top:2px;font-size:.9rem}</style></head><body>
 
@@ -357,4 +362,77 @@ pick(false);
   let t = false; const go = () => { const y = window.scrollY; f.style.transform = 'translate3d(0,' + (-y * .12) + 'px,0)'; n.style.transform = 'translate3d(0,' + (-y * .38) + 'px,0)'; t = false; };
   addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(go); } }, { passive: true }); go(); })();
 </script>
-<script>(()=>{let s;try{s=sessionStorage.getItem("stkNav");sessionStorage.removeItem("stkNav");}catch(e){}if(!s)return;const home=e=>{e.stopPropagation();e.preventDefault();location.replace("index.html");};document.addEventListener("click",e=>{if(e.target.closest("#lb-close"))home(e);},true);document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lb").hidden)home(e);},true);})();</script><script>(()=>{const S=[157];document.querySelectorAll(".work[data-n]").forEach(b=>{if(S.includes(+b.dataset.n))b.classList.add("sold")});})();</script></body></html>
+<script>(()=>{let s;try{s=sessionStorage.getItem("stkNav");sessionStorage.removeItem("stkNav");}catch(e){}if(!s)return;const home=e=>{e.stopPropagation();e.preventDefault();location.replace("index.html");};document.addEventListener("click",e=>{if(e.target.closest("#lb-close"))home(e);},true);document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lb").hidden)home(e);},true);})();</script><script>(()=>{const S=[157];document.querySelectorAll(".work[data-n]").forEach(b=>{if(S.includes(+b.dataset.n))b.classList.add("sold")});})();</script><script>
+(() => {
+  // free zoom in the painting viewer: pinch / wheel / drag / double-tap
+  const lb = document.getElementById('lb'), stage = document.getElementById('stage'), img = document.getElementById('lb-img');
+  if (!lb || !stage || !img) return;
+  let s = 1, tx = 0, ty = 0, held = false;
+  img.draggable = false; img.addEventListener('dragstart', e => e.preventDefault());
+  const P = new Map(); let pinch = null, pan = null, moved = 0, lastTap = 0;
+  const maxS = () => { const w = img.getBoundingClientRect().width / s; return Math.max(4, (img.naturalWidth || 2000) / Math.max(1, w) * 1.6); };
+  const clamp = () => {
+    const w = img.offsetWidth, h = img.offsetHeight, W = stage.clientWidth, H = stage.clientHeight;
+    const mx = Math.max(0, (w * s - W) / 2 + 40), my = Math.max(0, (h * s - H) / 2 + 40);
+    tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+  };
+  const apply = (anim) => {
+    if (s <= 1.001) { s = 1; tx = 0; ty = 0; } else clamp();
+    img.style.transition = anim ? 'transform .25s ease' : 'none';
+    img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    lb.classList.toggle('fz', s > 1);
+  };
+  // point relative to the image's resting centre
+  const rel = (x, y) => { const r = stage.getBoundingClientRect(); return [x - (r.left + stage.clientLeft + stage.clientWidth / 2) + (stage.scrollLeft || 0) * 0, y - (r.top + stage.clientTop + stage.clientHeight / 2)]; };
+  const zoomAt = (x, y, ns, anim) => {
+    ns = Math.min(maxS(), Math.max(1, ns));
+    const [px, py] = rel(x, y), ux = (px - tx) / s, uy = (py - ty) / s;
+    s = ns; tx = px - ux * s; ty = py - uy * s; apply(anim);
+  };
+  const reset = () => { s = 1; tx = 0; ty = 0; apply(false); };
+  new MutationObserver(reset).observe(img, { attributes: true, attributeFilter: ['src'] });
+  new MutationObserver(() => { if (lb.hidden) reset(); }).observe(lb, { attributes: true, attributeFilter: ['hidden'] });
+
+  // the old click-to-zoom and the swipe-to-next must not fire while zooming
+  stage.addEventListener('click', e => { if (e.target === img) { e.stopPropagation(); e.preventDefault(); } }, true);
+  ['touchstart', 'touchmove', 'touchend'].forEach(t => lb.addEventListener(t, e => {
+    if (e.touches.length > 1 || s > 1 || held) { held = e.touches.length > 0; e.stopPropagation(); }
+  }, { capture: true, passive: true }));
+
+  img.addEventListener('pointerdown', e => {
+    img.setPointerCapture(e.pointerId); P.set(e.pointerId, [e.clientX, e.clientY]); moved = 0;
+    if (P.size === 2) { const [a, b] = [...P.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), s, mx: (a[0] + b[0]) / 2, my: (a[1] + b[1]) / 2, tx, ty }; pan = null; held = true; }
+    else if (P.size === 1) pan = { x: e.clientX, y: e.clientY, tx, ty };
+  });
+  img.addEventListener('pointermove', e => {
+    if (!P.has(e.pointerId)) return; P.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pinch && P.size >= 2) {
+      const [a, b] = [...P.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      s = pinch.s; tx = pinch.tx; ty = pinch.ty; zoomAt(pinch.mx, pinch.my, pinch.s * d / pinch.d, false);
+      tx += mx - pinch.mx; ty += my - pinch.my; apply(false); moved = 99;
+    } else if (pan && s > 1) {
+      const dx = e.clientX - pan.x, dy = e.clientY - pan.y; moved = Math.max(moved, Math.hypot(dx, dy));
+      tx = pan.tx + dx; ty = pan.ty + dy; apply(false);
+    } else if (pan) moved = Math.max(moved, Math.hypot(e.clientX - pan.x, e.clientY - pan.y));
+  });
+  const up = e => {
+    if (!P.has(e.pointerId)) return; P.delete(e.pointerId);
+    if (P.size < 2) pinch = null;
+    if (P.size === 1) { const [a] = [...P.values()]; pan = { x: a[0], y: a[1], tx, ty }; return; }
+    pan = null;
+    if (e.type !== 'pointerup' || moved > 6) return;
+    if (e.pointerType === 'mouse') { if (s > 1) { s = 1; apply(true); } else zoomAt(e.clientX, e.clientY, 2.5, true); return; }
+    const now = Date.now();
+    if (now - lastTap < 320) { lastTap = 0; if (s > 1) { s = 1; apply(true); } else zoomAt(e.clientX, e.clientY, 2.5, true); }
+    else lastTap = now;
+  };
+  img.addEventListener('pointerup', up); img.addEventListener('pointercancel', up);
+  stage.addEventListener('wheel', e => {
+    if (lb.hidden) return; e.preventDefault();
+    const k = Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0022));
+    zoomAt(e.clientX, e.clientY, s * k, false);
+  }, { passive: false });
+  addEventListener('resize', () => { if (s > 1) apply(false); });
+})();
+</script>
+</body></html>

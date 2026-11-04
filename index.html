@@ -16,6 +16,11 @@
 .legal-line { margin-top: 18px; font-size: .78rem; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline }
 .legal-line a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .legal-line a:hover { color: var(--ink) }
+
+.lb-stage img { touch-action: none; transform-origin: 50% 50%; will-change: transform }
+.lb.fz .lb-stage { overflow: hidden }
+.lb.fz .lb-stage img { cursor: grab }
+.lb.fz .lb-stage img:active { cursor: grabbing }
 </style>
 <style>
 #egg{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(8,6,6,.86),rgba(8,6,6,.95));animation:eggbg 7.6s ease forwards}
@@ -270,4 +275,77 @@ window.addEventListener('pageshow', () => { try { const y = sessionStorage.getIt
   let t = false; const go = () => { const y = window.scrollY; f.style.transform = 'translate3d(0,' + (-y * .12) + 'px,0)'; n.style.transform = 'translate3d(0,' + (-y * .38) + 'px,0)'; t = false; };
   addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(go); } }, { passive: true }); go(); })();
 </script>
-<script>(()=>{const S={"1": ["s50x60", 222, "Congrats, you've found my Open Wound, now touch it", "img/f/210.webp"], "2": ["s50x60", 201, "Congrats, you got sucked into the void. Release yourself whenever you're ready", "img/f/199.webp"], "3": ["s50x60", 226, "Are you drunk?", "img/f/212.webp"], "4": ["s60x70", 270, "Aaaaahhhh (please help me)", "img/f/267.webp"], "5": ["s50x70", 260, "You found a rock on a shelf. Truly the peak of human achievement", "img/f/257.webp"], "6": ["s50x70", 242, "You're trapped in this room now. Have fun with your demons", "img/f/237.webp"], "7": ["s50x60", 217, "Careful, don't burn yourself", "img/f/200.webp"], "8": ["s50x60", 229, "Congrats mate, you found some sticks", "img/f/225.webp"], "9": ["s50x60", 204, "Congrats, you just received a spitball", "img/f/205.webp"], "10": ["s50x60", 219, "Calm down, it's just fog. Probably", "img/f/206.webp"]},s=new URLSearchParams(location.search).get("s");if(!s||!S[s])return;history.replaceState(null,"",location.pathname);try{fetch("https://ntfy.sh/nael-stickers-7c41c5e586",{method:"POST",mode:"no-cors",keepalive:true,body:"Sticker "+s+" scanned: "+S[s][2]})}catch(e){}const d=document.createElement("div");d.id="egg";d.setAttribute("role","status");d.innerHTML='<div class="card"><img src="img/st/'+s+'.webp" alt=""><p>'+S[s][2].replace(/[<&]/g,c=>c==="<"?"&lt;":"&amp;")+'</p><small>'+s+' of 10</small></div>';for(let k=0;k<16;k++){const i=document.createElement("i"),a=k/16*6.283,r=120+Math.random()*90;i.style.setProperty("--x",Math.cos(a)*r+"px");i.style.setProperty("--y",Math.sin(a)*r+"px");d.appendChild(i);}let done=false;const end=()=>{if(done)return;done=true;d.remove();float();};d.addEventListener("click",end);setTimeout(end,7600);document.body.appendChild(d);function mk(cls,lab){const b=document.createElement("button");b.className="catch "+cls;b.setAttribute("aria-label","Catch the painting");b.innerHTML='<i class="cw"><img src="'+S[s][3]+'" alt=""></i><span>'+lab+'</span>';document.body.appendChild(b);requestAnimationFrame(()=>b.classList.add("on"));return b}let px=-1e4,py=-1e4;addEventListener("pointermove",e=>{px=e.clientX;py=e.clientY},{passive:true});function mover(b,x,y,ang,sp,onCatch){let tsp=200,turn=0,next=performance.now()+400,t0=performance.now(),run=true;const pick=t=>{const r=Math.random();if(r<.18){tsp=650+Math.random()*350;next=t+250+Math.random()*250}else if(r<.33){tsp=15+Math.random()*30;next=t+400+Math.random()*700}else{tsp=120+Math.random()*320;next=t+300+Math.random()*1100}turn=(Math.random()-.5)*(r<.18?9:4);if(Math.random()<.2)ang+=(Math.random()-.5)*3};const step=t=>{if(!run)return;const dt=Math.min(.05,(t-t0)/1000);t0=t;if(t>next)pick(t);const w=b.offsetWidth,h=b.offsetHeight;const dx=x+w/2-px,dy=y+h/2-py,dd=Math.hypot(dx,dy);if(dd<150){ang=Math.atan2(dy,dx)+(Math.random()-.5)*.8;tsp=Math.max(tsp,700);next=t+300}sp+=(tsp-sp)*Math.min(1,dt*(tsp>sp?9:3));ang+=turn*dt+Math.sin(t/230)*.9*dt;x+=Math.cos(ang)*sp*dt;y+=Math.sin(ang)*sp*dt;if(x<24){x=24;ang=Math.PI-ang}if(x>innerWidth-w-24){x=innerWidth-w-24;ang=Math.PI-ang}if(y<0){y=0;ang=-ang}if(y>innerHeight-h-30){y=innerHeight-h-30;ang=-ang}const r=Math.sin(t/700)*8+Math.cos(ang)*Math.min(10,sp/60);b.style.transform="translate("+x+"px,"+y+"px) rotate("+r+"deg)";requestAnimationFrame(step)};requestAnimationFrame(step);b.addEventListener("click",()=>{if(!run)return;run=false;onCatch(x,y)});return ()=>[x,y]}function go(){document.removeEventListener("click",block,true);document.documentElement.classList.remove("catching");try{sessionStorage.setItem("fromHome",String(Date.now()));sessionStorage.setItem("stkNav","1")}catch(e){}setTimeout(()=>{location.href="works.html#"+S[s][0]+"/"+S[s][1]},500)}function got(b){b.classList.add("got");b.style.transform+=" scale(1.5)";setTimeout(()=>b.remove(),500)}const block=e=>{if(!e.target.closest(".catch")){e.preventDefault();e.stopPropagation()}};function float(){if(!S[s][3])return;document.addEventListener("click",block,true);document.documentElement.classList.add("catching");const m=mk("whole","catch me");mover(m,Math.random()*(innerWidth-160)+20,innerHeight*.3,Math.random()*6.283,150,()=>{got(m);go()})}})();</script></body></html>
+<script>(()=>{const S={"1": ["s50x60", 222, "Congrats, you've found my Open Wound, now touch it", "img/f/210.webp"], "2": ["s50x60", 201, "Congrats, you got sucked into the void. Release yourself whenever you're ready", "img/f/199.webp"], "3": ["s50x60", 226, "Are you drunk?", "img/f/212.webp"], "4": ["s60x70", 270, "Aaaaahhhh (please help me)", "img/f/267.webp"], "5": ["s50x70", 260, "You found a rock on a shelf. Truly the peak of human achievement", "img/f/257.webp"], "6": ["s50x70", 242, "You're trapped in this room now. Have fun with your demons", "img/f/237.webp"], "7": ["s50x60", 217, "Careful, don't burn yourself", "img/f/200.webp"], "8": ["s50x60", 229, "Congrats mate, you found some sticks", "img/f/225.webp"], "9": ["s50x60", 204, "Congrats, you just received a spitball", "img/f/205.webp"], "10": ["s50x60", 219, "Calm down, it's just fog. Probably", "img/f/206.webp"]},s=new URLSearchParams(location.search).get("s");if(!s||!S[s])return;history.replaceState(null,"",location.pathname);try{fetch("https://ntfy.sh/nael-stickers-7c41c5e586",{method:"POST",mode:"no-cors",keepalive:true,body:"Sticker "+s+" scanned: "+S[s][2]})}catch(e){}const d=document.createElement("div");d.id="egg";d.setAttribute("role","status");d.innerHTML='<div class="card"><img src="img/st/'+s+'.webp" alt=""><p>'+S[s][2].replace(/[<&]/g,c=>c==="<"?"&lt;":"&amp;")+'</p><small>'+s+' of 10</small></div>';for(let k=0;k<16;k++){const i=document.createElement("i"),a=k/16*6.283,r=120+Math.random()*90;i.style.setProperty("--x",Math.cos(a)*r+"px");i.style.setProperty("--y",Math.sin(a)*r+"px");d.appendChild(i);}let done=false;const end=()=>{if(done)return;done=true;d.remove();float();};d.addEventListener("click",end);setTimeout(end,7600);document.body.appendChild(d);function mk(cls,lab){const b=document.createElement("button");b.className="catch "+cls;b.setAttribute("aria-label","Catch the painting");b.innerHTML='<i class="cw"><img src="'+S[s][3]+'" alt=""></i><span>'+lab+'</span>';document.body.appendChild(b);requestAnimationFrame(()=>b.classList.add("on"));return b}let px=-1e4,py=-1e4;addEventListener("pointermove",e=>{px=e.clientX;py=e.clientY},{passive:true});function mover(b,x,y,ang,sp,onCatch){let tsp=200,turn=0,next=performance.now()+400,t0=performance.now(),run=true;const pick=t=>{const r=Math.random();if(r<.18){tsp=650+Math.random()*350;next=t+250+Math.random()*250}else if(r<.33){tsp=15+Math.random()*30;next=t+400+Math.random()*700}else{tsp=120+Math.random()*320;next=t+300+Math.random()*1100}turn=(Math.random()-.5)*(r<.18?9:4);if(Math.random()<.2)ang+=(Math.random()-.5)*3};const step=t=>{if(!run)return;const dt=Math.min(.05,(t-t0)/1000);t0=t;if(t>next)pick(t);const w=b.offsetWidth,h=b.offsetHeight;const dx=x+w/2-px,dy=y+h/2-py,dd=Math.hypot(dx,dy);if(dd<150){ang=Math.atan2(dy,dx)+(Math.random()-.5)*.8;tsp=Math.max(tsp,700);next=t+300}sp+=(tsp-sp)*Math.min(1,dt*(tsp>sp?9:3));ang+=turn*dt+Math.sin(t/230)*.9*dt;x+=Math.cos(ang)*sp*dt;y+=Math.sin(ang)*sp*dt;if(x<24){x=24;ang=Math.PI-ang}if(x>innerWidth-w-24){x=innerWidth-w-24;ang=Math.PI-ang}if(y<0){y=0;ang=-ang}if(y>innerHeight-h-30){y=innerHeight-h-30;ang=-ang}const r=Math.sin(t/700)*8+Math.cos(ang)*Math.min(10,sp/60);b.style.transform="translate("+x+"px,"+y+"px) rotate("+r+"deg)";requestAnimationFrame(step)};requestAnimationFrame(step);b.addEventListener("click",()=>{if(!run)return;run=false;onCatch(x,y)});return ()=>[x,y]}function go(){document.removeEventListener("click",block,true);document.documentElement.classList.remove("catching");try{sessionStorage.setItem("fromHome",String(Date.now()));sessionStorage.setItem("stkNav","1")}catch(e){}setTimeout(()=>{location.href="works.html#"+S[s][0]+"/"+S[s][1]},500)}function got(b){b.classList.add("got");b.style.transform+=" scale(1.5)";setTimeout(()=>b.remove(),500)}const block=e=>{if(!e.target.closest(".catch")){e.preventDefault();e.stopPropagation()}};function float(){if(!S[s][3])return;document.addEventListener("click",block,true);document.documentElement.classList.add("catching");const m=mk("whole","catch me");mover(m,Math.random()*(innerWidth-160)+20,innerHeight*.3,Math.random()*6.283,150,()=>{got(m);go()})}})();</script><script>
+(() => {
+  // free zoom in the painting viewer: pinch / wheel / drag / double-tap
+  const lb = document.getElementById('lb'), stage = document.getElementById('stage'), img = document.getElementById('lb-img');
+  if (!lb || !stage || !img) return;
+  let s = 1, tx = 0, ty = 0, held = false;
+  img.draggable = false; img.addEventListener('dragstart', e => e.preventDefault());
+  const P = new Map(); let pinch = null, pan = null, moved = 0, lastTap = 0;
+  const maxS = () => { const w = img.getBoundingClientRect().width / s; return Math.max(4, (img.naturalWidth || 2000) / Math.max(1, w) * 1.6); };
+  const clamp = () => {
+    const w = img.offsetWidth, h = img.offsetHeight, W = stage.clientWidth, H = stage.clientHeight;
+    const mx = Math.max(0, (w * s - W) / 2 + 40), my = Math.max(0, (h * s - H) / 2 + 40);
+    tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+  };
+  const apply = (anim) => {
+    if (s <= 1.001) { s = 1; tx = 0; ty = 0; } else clamp();
+    img.style.transition = anim ? 'transform .25s ease' : 'none';
+    img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    lb.classList.toggle('fz', s > 1);
+  };
+  // point relative to the image's resting centre
+  const rel = (x, y) => { const r = stage.getBoundingClientRect(); return [x - (r.left + stage.clientLeft + stage.clientWidth / 2) + (stage.scrollLeft || 0) * 0, y - (r.top + stage.clientTop + stage.clientHeight / 2)]; };
+  const zoomAt = (x, y, ns, anim) => {
+    ns = Math.min(maxS(), Math.max(1, ns));
+    const [px, py] = rel(x, y), ux = (px - tx) / s, uy = (py - ty) / s;
+    s = ns; tx = px - ux * s; ty = py - uy * s; apply(anim);
+  };
+  const reset = () => { s = 1; tx = 0; ty = 0; apply(false); };
+  new MutationObserver(reset).observe(img, { attributes: true, attributeFilter: ['src'] });
+  new MutationObserver(() => { if (lb.hidden) reset(); }).observe(lb, { attributes: true, attributeFilter: ['hidden'] });
+
+  // the old click-to-zoom and the swipe-to-next must not fire while zooming
+  stage.addEventListener('click', e => { if (e.target === img) { e.stopPropagation(); e.preventDefault(); } }, true);
+  ['touchstart', 'touchmove', 'touchend'].forEach(t => lb.addEventListener(t, e => {
+    if (e.touches.length > 1 || s > 1 || held) { held = e.touches.length > 0; e.stopPropagation(); }
+  }, { capture: true, passive: true }));
+
+  img.addEventListener('pointerdown', e => {
+    img.setPointerCapture(e.pointerId); P.set(e.pointerId, [e.clientX, e.clientY]); moved = 0;
+    if (P.size === 2) { const [a, b] = [...P.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), s, mx: (a[0] + b[0]) / 2, my: (a[1] + b[1]) / 2, tx, ty }; pan = null; held = true; }
+    else if (P.size === 1) pan = { x: e.clientX, y: e.clientY, tx, ty };
+  });
+  img.addEventListener('pointermove', e => {
+    if (!P.has(e.pointerId)) return; P.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pinch && P.size >= 2) {
+      const [a, b] = [...P.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      s = pinch.s; tx = pinch.tx; ty = pinch.ty; zoomAt(pinch.mx, pinch.my, pinch.s * d / pinch.d, false);
+      tx += mx - pinch.mx; ty += my - pinch.my; apply(false); moved = 99;
+    } else if (pan && s > 1) {
+      const dx = e.clientX - pan.x, dy = e.clientY - pan.y; moved = Math.max(moved, Math.hypot(dx, dy));
+      tx = pan.tx + dx; ty = pan.ty + dy; apply(false);
+    } else if (pan) moved = Math.max(moved, Math.hypot(e.clientX - pan.x, e.clientY - pan.y));
+  });
+  const up = e => {
+    if (!P.has(e.pointerId)) return; P.delete(e.pointerId);
+    if (P.size < 2) pinch = null;
+    if (P.size === 1) { const [a] = [...P.values()]; pan = { x: a[0], y: a[1], tx, ty }; return; }
+    pan = null;
+    if (e.type !== 'pointerup' || moved > 6) return;
+    if (e.pointerType === 'mouse') { if (s > 1) { s = 1; apply(true); } else zoomAt(e.clientX, e.clientY, 2.5, true); return; }
+    const now = Date.now();
+    if (now - lastTap < 320) { lastTap = 0; if (s > 1) { s = 1; apply(true); } else zoomAt(e.clientX, e.clientY, 2.5, true); }
+    else lastTap = now;
+  };
+  img.addEventListener('pointerup', up); img.addEventListener('pointercancel', up);
+  stage.addEventListener('wheel', e => {
+    if (lb.hidden) return; e.preventDefault();
+    const k = Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0022));
+    zoomAt(e.clientX, e.clientY, s * k, false);
+  }, { passive: false });
+  addEventListener('resize', () => { if (s > 1) apply(false); });
+})();
+</script>
+</body></html>
