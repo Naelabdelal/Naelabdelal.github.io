@@ -17,6 +17,7 @@
 .legal-line a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line) }
 .legal-line a:hover { color: var(--ink) }
 </style>
+<script>document.documentElement.classList.add("sr-js")</script>
 </head><body>
 
 
@@ -115,6 +116,14 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .ix h2 { font-family: var(--display); font-weight: 400; font-size: 1.8rem; margin: 4px 0 0; line-height: 1.05 }
 .ix p:last-child { margin: 8px 0 0; color: var(--muted); font-size: .9rem }
 .sr { border-top: 1px solid var(--line); margin-top: 48px }
+html.sr-js .sr { display: none }
+html.sr-js .sr.open { display: block }
+.ix li.on a { border-color: var(--ember) }
+html.sr-js .ix a::after { content: "Open series"; display: block; margin-top: 14px; color: var(--ember); font: 500 .7rem var(--body); letter-spacing: .2em; text-transform: uppercase }
+html.sr-js .ix li.on a::after { content: "Close" }
+.ix-tail .ix { margin-top: 0 }
+.ix-tail { padding-top: 14px }
+.sr-x { text-align: center; padding: 8px 0 56px }
 /* DanBana: a triptych, hung side by side and aligned on its band */
 .trip { background: linear-gradient(180deg, transparent 0, rgb(42 37 38 / .7) 30%, transparent 100%) }
 .tp-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 32px); padding-block: 32px 64px; align-items: start }
@@ -242,9 +251,34 @@ function jumpTo(id) {
   put(); let n = 0; const t = setInterval(() => { put(); if (++n > 12) clearInterval(t); }, 120);
   document.querySelectorAll('img').forEach(i => { if (!i.complete) i.addEventListener('load', () => { if (n <= 12) put(); }, { once: true }); });
 }
-document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1); history.pushState(null, '', '#' + id); jumpTo(id); }));
-if (location.hash.length > 1) jumpTo(location.hash.slice(1));
-window.addEventListener('popstate', () => { if (location.hash.length > 1) jumpTo(location.hash.slice(1)); });
+// series open one at a time, directly under the card that was clicked
+const IX = document.querySelector('.ix'), IXS = IX.closest('section'), CARDS = [...IX.children];
+const TAIL = document.createElement('section'); TAIL.className = 'wrap ix-tail'; const UL2 = document.createElement('ul'); UL2.className = 'ix'; TAIL.appendChild(UL2);
+let OPEN = null, COLS = 0;
+const srOf = id => { const el = document.getElementById(id); return el ? el.closest('.sr') : null; };
+const cardOf = sr => CARDS.find(li => srOf(li.querySelector('a').getAttribute('href').slice(1)) === sr);
+const cols = () => getComputedStyle(IX).gridTemplateColumns.split(' ').length;
+function place() {
+  CARDS.forEach(li => IX.appendChild(li)); TAIL.remove();
+  document.querySelectorAll('.sr.open').forEach(x => { if (x !== OPEN) x.classList.remove('open'); });
+  const on = OPEN ? cardOf(OPEN) : null;
+  CARDS.forEach(li => { li.classList.toggle('on', li === on); li.querySelector('a').setAttribute('aria-expanded', li === on ? 'true' : 'false'); });
+  COLS = cols();
+  if (!OPEN) return;
+  const top = on.offsetTop, rest = CARDS.filter(c => c.offsetTop > top + 4);
+  IXS.after(OPEN); OPEN.classList.add('open');
+  if (rest.length) { UL2.style.gridTemplateColumns = 'repeat(' + COLS + ', minmax(0, 1fr))'; OPEN.after(TAIL); rest.forEach(c => UL2.appendChild(c)); }
+}
+function closeSr() { const li = OPEN && cardOf(OPEN); OPEN = null; place(); history.pushState(null, '', location.pathname + location.search); if (li) li.scrollIntoView({ block: 'center', behavior: 'instant' }); }
+function go(id) { const sr = srOf(id); if (sr && sr !== OPEN) { OPEN = sr; place(); } if (sr) jumpTo(id); }
+CARDS.forEach(li => { const a = li.querySelector('a'); a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1);
+  if (OPEN && OPEN === srOf(id)) closeSr(); else { history.pushState(null, '', '#' + id); go(id); } }); });
+document.querySelectorAll('.sr').forEach(sr => { const d = document.createElement('div'); d.className = 'wrap sr-x'; d.innerHTML = '<button class="btn" type="button">Close series</button>'; d.firstChild.addEventListener('click', closeSr); sr.appendChild(d); });
+document.querySelectorAll('a[href^="#"]').forEach(a => { if (a.closest('.ix')) return; a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1); history.pushState(null, '', '#' + id); go(id); }); });
+place();
+if (location.hash.length > 1) go(location.hash.slice(1));
+window.addEventListener('popstate', () => { if (location.hash.length > 1) go(location.hash.slice(1)); else if (OPEN) { OPEN = null; place(); } });
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (OPEN && cols() !== COLS) place(); }, 150); });
 let L = [];
 let cur = 0, opener = null;
     function show(i) {
