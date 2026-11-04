@@ -83,7 +83,8 @@ footer b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; col
 .lb-top, .lb-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; }
 .lb-top { padding-top: calc(env(safe-area-inset-top, 0px) + 10px) }
 .lb-bottom { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) }
-.lb-stage { overflow: auto; display: flex; align-items: center; justify-content: center; min-height: 0; box-sizing: border-box; padding: clamp(24px, 7vh, 72px) clamp(28px, 10vw, 140px); background: radial-gradient(ellipse 75% 65% at 50% 40%, #8e8a84 0%, #6f6b66 45%, #4a4744 100%) }
+.lb-stage { overflow: auto; display: flex; align-items: center; justify-content: center; min-height: 0; box-sizing: border-box; padding: clamp(24px, 7vh, 72px) clamp(28px, 10vw, 140px); background: #bcb6ad url(img/bg/wall-l.webp) center / cover no-repeat }
+@media (max-aspect-ratio: 1/1) { .lb-stage { background-image: url(img/bg/wall-p.webp) } }
 .lb-stage img { max-width: 100%; max-height: 100%; min-width: 0; min-height: 0; flex: none; width: auto; height: auto; object-fit: contain; cursor: zoom-in; box-shadow: 0 0 0 1px rgba(0,0,0,.35), 0 3px 6px rgba(0,0,0,.35), 0 14px 28px rgba(0,0,0,.4), 0 30px 70px rgba(0,0,0,.35) }
 .lb.zoom .lb-stage { padding: 0 }
 .lb.zoom .lb-stage { align-items: flex-start; justify-content: flex-start }
